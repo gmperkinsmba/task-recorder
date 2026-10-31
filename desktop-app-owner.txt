@@ -1,0 +1,3 @@
+MacroForge desktop bundle
+io.github.gmperkinsmba.macroforge
+local-build-owner-marker-v1

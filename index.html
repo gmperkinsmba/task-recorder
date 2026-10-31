@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#111719"><meta name="macroforge-token" content="__TOKEN__"><title>Task Recorder</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div id="stateAlert" class="state-alert" role="status">Loading saved Task Recorder state…</div>
+<main id="appRoot" class="shell" aria-busy="true">
+  <header class="top"><a class="brand" href="#" aria-label="Task Recorder home"><span class="brand-mark" aria-hidden="true">T</span><span>TASK<b>RECORDER</b></span></a><div class="top-actions"><span class="local-badge"><i></i> LOCAL DEMO</span><button id="settingsOpen" class="outline">Settings</button></div></header>
+  <section class="hero"><div class="eyebrow">RECORD · INSPECT · REPLAY</div><h1>Task Recorder</h1><p>Record a short task, review each step, and replay it in a safe demo workspace.</p></section>
+  <section class="studio" aria-label="Macro editor and demo workspace">
+    <aside class="timeline panel">
+      <div class="panel-head"><div><div class="eyebrow">YOUR MACRO</div><h2>Follow-up flow</h2></div><button id="rename" class="text-button">Rename</button></div>
+      <div class="transport">
+        <button id="record" class="record-button"><span></span><b>Record</b></button>
+        <button id="stop" class="stop-button" disabled>Stop</button>
+        <button id="addWait" class="text-button">+ Wait</button>
+      </div>
+      <div id="recordState" class="state-line" aria-live="polite"><span class="state-dot"></span> Click the demo workspace to arm it.</div>
+      <div class="step-head"><span>STEPS <b id="stepCount">0</b></span><span id="loopInfo">MAX 2 LOOPS</span></div>
+      <ol id="steps" class="steps"><li class="steps-empty">No steps yet. Arm the demo and record a short flow.</li></ol>
+      <div id="stepEditor" class="step-editor" hidden></div>
+      <div class="replay-bar"><div><div class="eyebrow">NEXT ACTION</div><strong id="nextAction">No step selected</strong></div><div class="play-actions"><button id="stepOnce" class="outline" disabled>Step</button><button id="replay" class="play-button" disabled>Replay 2×</button></div></div>
+      <div class="safety-row"><span aria-hidden="true">⏹</span><span>Stop anytime with this button or Escape.</span><button id="stopPlayback" class="stop-button" disabled>Stop</button></div>
+    </aside>
+    <section class="workspace-panel panel">
+      <div class="workspace-head"><div><div class="eyebrow">SYNTHETIC WORKSPACE</div><h2>Demo CRM</h2></div><label class="target-picker">TARGET<select id="targetSelect" aria-label="Select replay target"><option value="crm-demo">Demo CRM</option><option value="board-demo">Demo Board</option></select></label></div>
+      <div id="workspace" class="workspace" tabindex="0" aria-label="Demo CRM workspace. Click here to arm this replay target" data-target="crm-demo">
+        <div class="app-top"><div class="app-wordmark"><span class="app-glyph">N</span><div><b>Northstar</b><small>DEMO CRM · SAMPLE DATA</small></div></div><span class="sample-tag">SYNTHETIC</span></div>
+        <div class="app-content">
+          <div class="app-title"><div><span class="crumb">WORK QUEUE / FOLLOW-UP</span><h3>Open work</h3></div><span class="count-tag" id="taskCount">0 ITEMS</span></div>
+          <form id="taskForm" class="task-form" autocomplete="off">
+            <label for="workCode">Work code <span>SAFE FIELD</span></label>
+            <div class="form-row"><input id="workCode" data-field="work-code" maxlength="24" placeholder="WO-204" autocomplete="off"><button id="addTask" data-action="add-item" type="submit" class="add-button">Add item <span aria-hidden="true">+</span></button></div>
+            <label for="summary">Short note <span>SAFE FIELD</span></label><input id="summary" data-field="summary" maxlength="100" placeholder="Send the updated schedule" autocomplete="off">
+            <details class="sensitive-demo"><summary>Sensitive fields demo · never recorded</summary><label for="contactEmail">Contact email</label><input id="contactEmail" data-field="contact-email" type="email" autocomplete="email" placeholder="name@example.test"><label for="demoPassword">Password</label><input id="demoPassword" data-field="demo-password" type="password" autocomplete="current-password" placeholder="Never saved"></details>
+          </form>
+          <div class="work-list-head"><span>ITEM</span><span>STATUS</span></div><ul id="taskList" class="task-list"><li class="list-empty">Add a made-up work item to start.</li></ul>
+        </div>
+        <div class="workspace-foot"><span id="targetState">Target not armed</span><span>Local demo only</span></div>
+      </div>
+      <div id="focusWarning" class="focus-warning" role="status" hidden>Playback paused. Return to this page, choose Demo CRM, then click inside the workspace to arm it again.</div>
+    </section>
+  </section>
+  <footer>Task Recorder works only inside this sample page. It does not control other apps or your desktop.</footer>
+</main>
+<dialog id="settings"><form method="dialog"><div class="dialog-head"><div><div class="eyebrow">PREFERENCES</div><h2>Settings</h2></div><button class="outline" aria-label="Close settings">Close ×</button></div><label for="macroName">Macro name</label><input id="macroName" maxlength="60"><label for="maxLoops">Maximum replay loops</label><select id="maxLoops"><option value="1">1 loop</option><option value="2">2 loops</option><option value="3">3 loops</option></select><p>Replay is capped at three loops. It checks the target and page focus before every step.</p><button id="clearMacro" type="button" class="danger">Clear saved macro</button></form></dialog>
+<script src="macro.js"></script><script src="app.js"></script>
+</body></html>
