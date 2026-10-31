@@ -1,4 +1,6 @@
 import http.client
+import contextlib
+import io
 import json
 import tempfile
 import threading
@@ -98,6 +100,17 @@ class ServerBoundaryTests(unittest.TestCase):
             status, _, payload, _ = self.json_request(request["POST"], request["body"], **case)
             self.assertEqual(status, 403, payload)
         self.assertFalse(self.state_path.exists())
+
+    def test_rejected_credential_payload_is_not_echoed_or_logged(self):
+        secret = "ghp_" + "Z" * 36
+        state = state_value()
+        state["steps"] = [{"id":"secret-step","type":"input","target":"crm-demo","field":"summary","value":secret}]
+        captured = io.StringIO()
+        with contextlib.redirect_stderr(captured), contextlib.redirect_stdout(captured):
+            status, _, payload, raw = self.json_request("/api/state/bootstrap", {"state":state})
+        self.assertEqual(status, 400)
+        self.assertNotIn(secret, raw.decode())
+        self.assertNotIn(secret, captured.getvalue())
 
     def test_startup_bootstrap_persist_and_restart_on_a_different_ephemeral_port(self):
         status, _, loaded, _ = self.json_request("/api/state/load", {})

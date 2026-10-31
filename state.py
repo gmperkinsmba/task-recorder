@@ -27,7 +27,8 @@ SAFE_CODE = re.compile(r"^[a-z0-9][a-z0-9._-]{0,23}$", re.I)
 SENSITIVE_VALUE = re.compile(
     r"[\w.+-]+@[\w.-]+\.[a-z]{2,}|\b\d{3}-\d{2}-\d{4}\b|"
     r"\b(?:\d[ -]?){13,19}\b|\b(?:\+?1[ .-]?)?(?:\(?\d{3}\)?[ .-]?)\d{3}[ .-]?\d{4}\b|"
-    r"\b(?:sk|pk|api|token)[-_][a-z0-9_-]{8,}\b",
+    r"\b(?:sk|pk|api|token)[-_][a-z0-9_-]{8,}\b|"
+    r"\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16})\b",
     re.I,
 )
 

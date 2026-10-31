@@ -112,6 +112,20 @@ class MacroStateStoreTests(unittest.TestCase):
         with self.assertRaises(StateValidationError):
             self.store.bootstrap(state)
 
+    def test_common_github_and_aws_credential_patterns_are_rejected_without_echo(self):
+        values = ("ghp_" + "A" * 36, "github_pat_" + "B" * 45, "AKIA" + "0" * 16)
+        for value in values:
+            state = sample_state(); state["steps"][0]["value"] = value
+            with self.subTest(prefix=value[:8]), self.assertRaises(StateValidationError) as caught:
+                self.store.bootstrap(state)
+            self.assertNotIn(value, str(caught.exception))
+
+    def test_credential_filter_allows_noncredential_text(self):
+        state = sample_state()
+        state["steps"][0]["value"] = "Review WO-AKIA-202 and ghp_short in the demo"
+        saved = self.store.bootstrap(state)
+        self.assertEqual(saved.state["steps"][0]["value"], state["steps"][0]["value"])
+
     def test_unknown_step_keys_and_boolean_numbers_are_rejected(self):
         state = sample_state()
         state["steps"][0]["url"] = "https://example.test"

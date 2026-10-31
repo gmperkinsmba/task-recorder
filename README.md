@@ -34,6 +34,8 @@ Run `node --check app.js && node --check macro.js && node tests/test_macro.js &&
 
 The backend owns saved state so it survives a new browser port. By default, the browser and native versions use the private `.macroforge` folder in your home directory. Before launching the native app, you can set `MACROFORGE_DATA_DIR` to a nonempty absolute folder path to choose another private state folder; it uses the same owner-only protections. The state file is limited to safe demo steps and synthetic rows. If saved data is corrupt, Task Recorder preserves it and shows an error instead of replacing it with defaults. Do not enter real personal or customer data. Task Recorder runs only in its built-in demo workspace. It does not automate your desktop or other apps.
 
+The text check blocks some common credential patterns. It cannot find every secret, so keep credentials out of saved text.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
